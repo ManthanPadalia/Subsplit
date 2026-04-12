@@ -17,6 +17,10 @@ class UserLogin(BaseModel):
     password: str
 
 
+class UserUpdate(BaseModel):
+    name: str | None = Field(None, min_length=1, max_length=100)
+
+
 class UserOut(BaseModel):
     id: uuid.UUID
     name: str
@@ -33,6 +37,12 @@ class UserWithScore(UserOut):
 
 
 class Token(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+
+class AuthResponse(BaseModel):
+    user: UserOut
     access_token: str
     token_type: str = "bearer"
 
