@@ -1,8 +1,12 @@
 from .payment import (
+    ActivatedSlotPlanSummary,
+    ActivatedSlotSummary,
     CreateOrderRequest,
     CreateOrderResponse,
     PaymentOut,
+    PaymentPlanSummary,
     VerifyPaymentRequest,
+    VerifyPaymentResponse,
 )
 from .plan import PlanCreate, PlanOut, PlanSlotPreview, PlanUpdate
 from .slot import (
@@ -30,8 +34,12 @@ __all__ = [
     "SlotPlanSummary",
     "SlotPaymentHistoryItem",
     "SlotCancelResponse",
+    "PaymentPlanSummary",
+    "ActivatedSlotPlanSummary",
+    "ActivatedSlotSummary",
     "CreateOrderRequest",
     "CreateOrderResponse",
     "VerifyPaymentRequest",
+    "VerifyPaymentResponse",
     "PaymentOut",
 ]
