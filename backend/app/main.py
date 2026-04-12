@@ -3,7 +3,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.routers import auth
+from app.routers import auth, plans
 
 app = FastAPI(title="SubSplit API")
 
@@ -47,6 +47,7 @@ async def validation_exception_handler(_: Request, exc: RequestValidationError) 
 
 
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
+app.include_router(plans.router, prefix="/api/plans", tags=["Plans"])
 
 
 @app.get("/")
