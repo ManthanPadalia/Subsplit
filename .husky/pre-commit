@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo "Running pre-commit checks..."
+
+if [ -d "frontend" ]; then
+  cd frontend
+  npx lint-staged
+  cd ..
+fi
+
+if [ -d "backend" ]; then
+  cd backend
+  ruff check .
+  cd ..
+fi
+
+echo "All pre-commit checks passed."
