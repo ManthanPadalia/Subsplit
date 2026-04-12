@@ -5,7 +5,13 @@ from .payment import (
     VerifyPaymentRequest,
 )
 from .plan import PlanCreate, PlanOut, PlanSlotPreview, PlanUpdate
-from .slot import SlotCancelResponse, SlotOut, SlotWithPlan
+from .slot import (
+    SlotCancelResponse,
+    SlotDetailOut,
+    SlotOut,
+    SlotPaymentHistoryItem,
+    SlotPlanSummary,
+)
 from .user import Token, TokenPayload, UserCreate, UserLogin, UserOut, UserWithScore
 
 __all__ = [
@@ -20,7 +26,9 @@ __all__ = [
     "PlanOut",
     "PlanSlotPreview",
     "SlotOut",
-    "SlotWithPlan",
+    "SlotDetailOut",
+    "SlotPlanSummary",
+    "SlotPaymentHistoryItem",
     "SlotCancelResponse",
     "CreateOrderRequest",
     "CreateOrderResponse",
