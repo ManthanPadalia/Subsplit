@@ -1736,9 +1736,10 @@ Complete list of all error codes returned by the SubSplit API.
 | GET | `/api/admin/users/:id` | Admin | Full user profile |
 | PATCH | `/api/admin/users/:id/deactivate` | Admin | Deactivate user account |
 | GET | `/api/admin/analytics` | Admin | Full analytics data |
+| POST | `/api/admin/slots/check-lapses` | Admin | Trigger lapse processing |
 | GET | `/api/admin/waitlist/:planId` | Admin | Get plan waitlist |
 
-**Total endpoints: 26**
+**Total API operations: 28**
 
 ---
 

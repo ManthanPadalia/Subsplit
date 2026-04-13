@@ -5,6 +5,8 @@ from pydantic import BaseModel, ConfigDict, computed_field
 
 from app.core.money import paise_to_rupees
 from app.models.payment import PaymentStatus
+from app.models.plan import PlanCategory
+from app.models.slot import SlotStatus
 
 
 class CreateOrderRequest(BaseModel):
@@ -31,18 +33,43 @@ class VerifyPaymentRequest(BaseModel):
     razorpay_signature: str
 
 
+class PaymentPlanSummary(BaseModel):
+    id: uuid.UUID
+    name: str
+    category: PlanCategory
+
+
+class ActivatedSlotPlanSummary(BaseModel):
+    id: uuid.UUID
+    name: str
+    category: PlanCategory
+    access_instructions: str | None
+
+
+class ActivatedSlotSummary(BaseModel):
+    id: uuid.UUID
+    slot_number: int
+    status: SlotStatus
+    assigned_at: datetime | None
+    expires_at: datetime | None
+    plan: ActivatedSlotPlanSummary
+
+
+class VerifyPaymentResponse(BaseModel):
+    payment_id: uuid.UUID
+    status: PaymentStatus
+    slot: ActivatedSlotSummary
+
+
 class PaymentOut(BaseModel):
     id: uuid.UUID
-    user_id: uuid.UUID
-    slot_id: uuid.UUID
     amount_paise: int
     status: PaymentStatus
     razorpay_order_id: str | None
     razorpay_payment_id: str | None
-    razorpay_signature: str | None = None
     failure_reason: str | None
     created_at: datetime
-    plan_name: str
+    plan: PaymentPlanSummary
 
     model_config = ConfigDict(from_attributes=True)
 

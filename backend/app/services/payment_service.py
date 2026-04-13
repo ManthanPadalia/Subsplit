@@ -88,17 +88,15 @@ def verify_and_activate(
     On success: update payment to SUCCESS, activate the slot.
     On failure: update payment to FAILED, raise ValueError.
     """
-    payment = (
-        db.query(Payment)
-        .filter(
-            Payment.razorpay_order_id == razorpay_order_id,
-            Payment.user_id == user.id,
-            Payment.status == PaymentStatus.PENDING,
-        )
-        .first()
-    )
+    payment = db.query(Payment).filter(Payment.razorpay_order_id == razorpay_order_id).first()
     if payment is None:
         raise ValueError("PAYMENT_NOT_FOUND")
+
+    if payment.user_id != user.id:
+        raise PermissionError("FORBIDDEN")
+
+    if payment.status != PaymentStatus.PENDING:
+        raise ValueError("PAYMENT_ALREADY_PROCESSED")
 
     expected_signature = hmac.new(
         key=settings.RAZORPAY_KEY_SECRET.encode("utf-8"),
@@ -144,4 +142,6 @@ def verify_and_activate(
     )
 
     db.commit()
+    db.refresh(payment)
+    db.refresh(slot)
     return payment, slot
