@@ -9,6 +9,7 @@ from .payment import (
     VerifyPaymentResponse,
 )
 from .plan import PlanCreate, PlanOut, PlanSlotPreview, PlanUpdate
+from .score import ScoreBreakdown, ScoreEventOut, ScoreSummaryOut
 from .slot import (
     SlotCancelResponse,
     SlotDetailOut,
@@ -35,6 +36,9 @@ __all__ = [
     "PlanUpdate",
     "PlanOut",
     "PlanSlotPreview",
+    "ScoreBreakdown",
+    "ScoreEventOut",
+    "ScoreSummaryOut",
     "SlotOut",
     "SlotDetailOut",
     "SlotPlanSummary",
