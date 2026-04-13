@@ -793,7 +793,7 @@ app.include_router(admin.router, prefix="/api/admin", tags=["Admin"])
 
 After implementing all admin routes, verify the full API is working:
 cd backend && uvicorn app.main:app --reload
-Open http://localhost:8000/docs and verify all 26 endpoints appear.
+Open http://localhost:8000/docs and verify all 28 API operations appear.
 ```
 
 ---
@@ -1590,7 +1590,7 @@ Read docs/subsplit-ui-spec.md Section 13 (State Patterns).
 Perform final integration, polish, and verification across the whole project.
 
 Backend tasks:
-1. Verify all 26 API endpoints are registered in main.py and appear in Swagger UI.
+1. Verify all 28 API operations are registered in main.py and appear in Swagger UI.
    Open http://localhost:8000/docs — screenshot or list all endpoints.
 
 2. Test the complete payment flow end-to-end using Razorpay test mode:

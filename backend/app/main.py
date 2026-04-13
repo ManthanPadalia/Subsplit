@@ -5,7 +5,13 @@ from fastapi.responses import JSONResponse
 
 from app.routers import admin, auth, payments, plans, scores, slots, waitlist
 
-app = FastAPI(title="SubSplit API")
+app = FastAPI(
+    title="SubSplit API",
+    description="Subscription sharing platform — SubSplit buys the plan, you buy the slot.",
+    version="1.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc",
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -55,6 +61,11 @@ app.include_router(scores.router, prefix="/api/scores", tags=["SubSplit Score"])
 app.include_router(admin.router, prefix="/api/admin", tags=["Admin"])
 
 
-@app.get("/")
-def health_check() -> dict[str, str]:
+@app.get("/", tags=["Health"])
+def root() -> dict[str, str]:
     return {"status": "ok", "message": "SubSplit API is running."}
+
+
+@app.get("/health", tags=["Health"])
+def health_check() -> dict[str, str]:
+    return {"status": "healthy"}

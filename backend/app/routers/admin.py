@@ -17,8 +17,8 @@ from app.models.score_event import ScoreEvent, ScoreEventType
 from app.models.slot import Slot, SlotStatus
 from app.models.user import User, UserRole
 from app.models.waitlist import WaitlistEntry
-from app.schemas.admin import SlotRevokeRequest
-from app.schemas.plan import PlanCreate, PlanUpdate
+from app.schemas.admin import AdminPlanUpdate, SlotRevokeRequest
+from app.schemas.plan import PlanCreate
 from app.services import scoring_service, slot_service
 
 router = APIRouter(dependencies=[Depends(get_current_admin)])
@@ -458,7 +458,7 @@ def get_admin_plan(plan_id: uuid.UUID, db: Session = Depends(get_db)) -> dict:
 @router.put("/plans/{plan_id}")
 def update_plan(
     plan_id: uuid.UUID,
-    payload: PlanUpdate,
+    payload: AdminPlanUpdate,
     db: Session = Depends(get_db),
 ) -> dict:
     plan = db.query(Plan).options(joinedload(Plan.slots)).filter(Plan.id == plan_id).first()
