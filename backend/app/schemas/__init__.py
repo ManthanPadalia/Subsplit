@@ -17,6 +17,12 @@ from .slot import (
     SlotPlanSummary,
 )
 from .user import Token, TokenPayload, UserCreate, UserLogin, UserOut, UserWithScore
+from .waitlist import (
+    WaitlistEntryOut,
+    WaitlistJoinRequest,
+    WaitlistJoinResponse,
+    WaitlistPlanSummary,
+)
 
 __all__ = [
     "UserCreate",
@@ -42,4 +48,8 @@ __all__ = [
     "VerifyPaymentRequest",
     "VerifyPaymentResponse",
     "PaymentOut",
+    "WaitlistJoinRequest",
+    "WaitlistJoinResponse",
+    "WaitlistPlanSummary",
+    "WaitlistEntryOut",
 ]
