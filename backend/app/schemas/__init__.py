@@ -1,3 +1,4 @@
+from .admin import SlotRevokeRequest
 from .payment import (
     ActivatedSlotPlanSummary,
     ActivatedSlotSummary,
@@ -26,6 +27,7 @@ from .waitlist import (
 )
 
 __all__ = [
+    "SlotRevokeRequest",
     "UserCreate",
     "UserLogin",
     "UserOut",

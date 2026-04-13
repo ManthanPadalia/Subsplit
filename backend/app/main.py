@@ -3,7 +3,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.routers import auth, payments, plans, scores, slots, waitlist
+from app.routers import admin, auth, payments, plans, scores, slots, waitlist
 
 app = FastAPI(title="SubSplit API")
 
@@ -52,6 +52,7 @@ app.include_router(slots.router, prefix="/api/slots", tags=["Slots"])
 app.include_router(payments.router, prefix="/api/payments", tags=["Payments"])
 app.include_router(waitlist.router, prefix="/api/waitlist", tags=["Waitlist"])
 app.include_router(scores.router, prefix="/api/scores", tags=["SubSplit Score"])
+app.include_router(admin.router, prefix="/api/admin", tags=["Admin"])
 
 
 @app.get("/")
