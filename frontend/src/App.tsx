@@ -1,52 +1,85 @@
-function App() {
-  return (
-    <main className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto flex min-h-screen max-w-6xl items-center justify-center px-4 py-8 md:px-8 lg:px-12">
-        <div className="relative w-full max-w-3xl rounded-lg border border-border bg-card p-6 md:p-8">
-          <div className="absolute left-0 right-0 top-0 h-[3px] rounded-t-lg bg-primary" />
-          <div className="flex flex-col gap-4 pt-2">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
-              SubSplit Frontend
-            </p>
-            <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
-              React, Tailwind, and shadcn setup in place.
-            </h1>
-            <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              Prompt 15 bootstraps the frontend foundation only. Routing, auth,
-              pages, and API integration will layer onto this baseline in the
-              subsequent prompts.
-            </p>
-            <div className="grid gap-3 pt-2 md:grid-cols-3">
-              <div className="rounded-lg border border-border bg-muted p-4">
-                <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                  Stack
-                </p>
-                <p className="mt-2 text-sm text-foreground">
-                  React 18, Vite, TypeScript
-                </p>
-              </div>
-              <div className="rounded-lg border border-border bg-muted p-4">
-                <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                  Styling
-                </p>
-                <p className="mt-2 text-sm text-foreground">
-                  Tailwind v3 tokens + CSS variables
-                </p>
-              </div>
-              <div className="rounded-lg border border-border bg-muted p-4">
-                <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                  UI Base
-                </p>
-                <p className="mt-2 text-sm text-foreground">
-                  shadcn/ui components ready to add
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-  );
+import type { ReactNode } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+
+import { AdminAnalyticsPage } from "@/pages/AdminAnalyticsPage";
+import { AdminPage } from "@/pages/AdminPage";
+import { AdminPlanDetailPage } from "@/pages/AdminPlanDetailPage";
+import { BrowsePlansPage } from "@/pages/BrowsePlansPage";
+import { DashboardPage } from "@/pages/DashboardPage";
+import { HomePage } from "@/pages/HomePage";
+import { LoginPage } from "@/pages/LoginPage";
+import { PlanDetailPage } from "@/pages/PlanDetailPage";
+import { SignupPage } from "@/pages/SignupPage";
+import { useAuthStore } from "@/store/authStore";
+
+function ProtectedRoute({ children }: { children: ReactNode }) {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
 }
 
-export default App;
+function AdminRoute({ children }: { children: ReactNode }) {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isAdmin = useAuthStore((state) => state.isAdmin);
+
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!isAdmin()) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return <>{children}</>;
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/plans" element={<BrowsePlansPage />} />
+        <Route path="/plans/:id" element={<PlanDetailPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminPage />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/analytics"
+          element={
+            <AdminRoute>
+              <AdminAnalyticsPage />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/plans/:id"
+          element={
+            <AdminRoute>
+              <AdminPlanDetailPage />
+            </AdminRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
