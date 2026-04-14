@@ -1,10 +1,12 @@
 import type { LucideIcon } from "lucide-react";
+import type { ComponentProps } from "react";
 
 import { Button } from "@/components/ui/button";
 
 interface EmptyStateAction {
   label: string;
   onClick: () => void;
+  variant?: ComponentProps<typeof Button>["variant"];
 }
 
 interface EmptyStateProps {
@@ -28,7 +30,11 @@ export function EmptyState({
       <p className="mb-1 text-base font-medium text-foreground">{title}</p>
       <p className="max-w-md text-sm text-muted-foreground">{description}</p>
       {action ? (
-        <Button className="mt-6" onClick={action.onClick}>
+        <Button
+          className="mt-6"
+          variant={action.variant}
+          onClick={action.onClick}
+        >
           {action.label}
         </Button>
       ) : null}
