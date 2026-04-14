@@ -1,5 +1,11 @@
 import type { ReactNode } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 
 import { AdminAnalyticsPage } from "@/pages/AdminAnalyticsPage";
 import { AdminPage } from "@/pages/AdminPage";
@@ -13,21 +19,37 @@ import { SignupPage } from "@/pages/SignupPage";
 import { useAuthStore } from "@/store/authStore";
 
 function ProtectedRoute({ children }: { children: ReactNode }) {
+  const location = useLocation();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   if (!isAuthenticated()) {
-    return <Navigate to="/login" replace />;
+    return (
+      <Navigate
+        to={`/login?redirect=${encodeURIComponent(
+          `${location.pathname}${location.search}`,
+        )}`}
+        replace
+      />
+    );
   }
 
   return <>{children}</>;
 }
 
 function AdminRoute({ children }: { children: ReactNode }) {
+  const location = useLocation();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const isAdmin = useAuthStore((state) => state.isAdmin);
 
   if (!isAuthenticated()) {
-    return <Navigate to="/login" replace />;
+    return (
+      <Navigate
+        to={`/login?redirect=${encodeURIComponent(
+          `${location.pathname}${location.search}`,
+        )}`}
+        replace
+      />
+    );
   }
 
   if (!isAdmin()) {

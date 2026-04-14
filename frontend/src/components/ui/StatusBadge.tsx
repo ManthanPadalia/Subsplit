@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 
 interface StatusBadgeProps {
   status: string;
+  label?: string;
 }
 
 const statusStyles: Record<string, string> = {
@@ -22,7 +23,7 @@ const statusStyles: Record<string, string> = {
   MUSIC: "bg-green-500/10 text-green-600 border-green-500/20",
 };
 
-export function StatusBadge({ status }: StatusBadgeProps) {
+export function StatusBadge({ status, label }: StatusBadgeProps) {
   const normalizedStatus = status.toUpperCase();
 
   return (
@@ -34,7 +35,7 @@ export function StatusBadge({ status }: StatusBadgeProps) {
           "bg-muted text-muted-foreground border-border",
       )}
     >
-      {status}
+      {label ?? status}
     </Badge>
   );
 }
