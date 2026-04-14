@@ -5,10 +5,11 @@ import { cancelSlot, getMySlots } from "@/api/slots";
 import { getErrorMessage } from "@/api/client";
 import type { SlotStatus } from "@/types";
 
-export function useMySlots(status?: SlotStatus) {
+export function useMySlots(status?: SlotStatus, enabled = true) {
   return useQuery({
     queryKey: ["slots", status],
     queryFn: () => getMySlots(status),
+    enabled,
   });
 }
 
