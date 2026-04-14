@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { checkLapses, getAdminDashboard, updatePlan } from "@/api/admin";
 import { getErrorMessage } from "@/api/client";
 import { AddPlanDialog } from "@/components/admin/AddPlanDialog";
+import { MetricCard } from "@/components/admin/MetricCard";
 import { AdminShell } from "@/components/layout/AppShell";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { Button } from "@/components/ui/button";
@@ -145,28 +146,15 @@ export function AdminPage() {
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
             {isLoading
               ? Array.from({ length: 4 }, (_, index) => (
-                  <div
-                    key={index}
-                    className="rounded-lg border border-border bg-card p-4"
-                  >
-                    <Skeleton className="h-3 w-24" />
-                    <Skeleton className="mt-4 h-8 w-28" />
-                    <Skeleton className="mt-3 h-3 w-32" />
-                  </div>
+                  <MetricCard key={index} label="" value="" delta="" loading />
                 ))
               : getMetricCards(data!.metrics).map((metric) => (
-                  <div
+                  <MetricCard
                     key={metric.label}
-                    className="rounded-lg border border-border bg-card p-4"
-                  >
-                    <p className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                      {metric.label}
-                    </p>
-                    <p className="text-2xl font-bold tabular-nums text-foreground">
-                      {metric.value}
-                    </p>
-                    <p className="mt-1 text-xs text-success">{metric.delta}</p>
-                  </div>
+                    label={metric.label}
+                    value={metric.value}
+                    delta={metric.delta}
+                  />
                 ))}
           </div>
         ) : null}
