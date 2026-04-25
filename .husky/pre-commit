@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo "Running pre-commit checks..."
+
+npx lint-staged --config .lintstagedrc.json
+
+if [ -x "backend/.venv/bin/ruff" ]; then
+  backend/.venv/bin/ruff check backend
+else
+  echo "Skipping backend ruff check: backend/.venv/bin/ruff not found."
+fi
+
+echo "All pre-commit checks passed."
