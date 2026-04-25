@@ -10,6 +10,7 @@ import { AppShell } from "@/components/layout/AppShell";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { useAuth } from "@/hooks/useAuth";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { usePlan } from "@/hooks/usePlans";
 import { useMySlots } from "@/hooks/useSlots";
 
@@ -21,6 +22,9 @@ export function PlanDetailPage() {
   const [waitlistModalOpen, setWaitlistModalOpen] = useState(false);
   const { data: plan, isLoading, isError, refetch } = usePlan(id ?? "");
   const { data: mySlots } = useMySlots(undefined, isAuthenticated);
+  useDocumentTitle(
+    plan ? `${plan.name} — SubSplit` : "Plan Details — SubSplit",
+  );
 
   const heldSlot = useMemo(
     () => mySlots?.slots.find((slot) => slot.plan.id === plan?.id) ?? null,

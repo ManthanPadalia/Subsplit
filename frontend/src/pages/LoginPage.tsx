@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/tooltip";
 import { getErrorMessage } from "@/api/client";
 import { useAuth } from "@/hooks/useAuth";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 const loginSchema = z.object({
   email: z.string().email("Enter a valid email address"),
@@ -31,6 +32,7 @@ export function LoginPage() {
   const [searchParams] = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
   const { isAuthenticated, setAuth, loginMutation } = useAuth();
+  useDocumentTitle("Log In — SubSplit");
   const {
     register,
     handleSubmit,

@@ -7,6 +7,7 @@ import { PlanCardSkeleton } from "@/components/plans/PlanCardSkeleton";
 import { AppShell } from "@/components/layout/AppShell";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { usePlans } from "@/hooks/usePlans";
 import type { PlanCategory } from "@/types";
 
@@ -15,6 +16,7 @@ export function BrowsePlansPage() {
     "ALL" | PlanCategory
   >("ALL");
   const { data, isLoading, isError, refetch } = usePlans(selectedCategory);
+  useDocumentTitle("Browse Plans — SubSplit");
 
   return (
     <AppShell>

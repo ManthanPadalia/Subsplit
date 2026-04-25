@@ -10,6 +10,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useMyScore } from "@/hooks/useScore";
 import { useMySlots } from "@/hooks/useSlots";
 import { useMyWaitlist } from "@/hooks/useWaitlist";
@@ -44,6 +45,7 @@ export function DashboardPage() {
   const { data: slotsData, isLoading: slotsLoading } = useMySlots();
   const { data: waitlistData } = useMyWaitlist();
   const { data: scoreData } = useMyScore();
+  useDocumentTitle("My Dashboard — SubSplit");
 
   if (!isAuthenticated || !user) {
     return (

@@ -21,6 +21,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn, formatRelativeTime, formatRupees } from "@/lib/utils";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import type { AdminDashboardMetrics } from "@/types";
 
 function getMetricCards(metrics: AdminDashboardMetrics) {
@@ -67,6 +68,7 @@ function getScoreTier(score: number) {
 }
 
 export function AdminAnalyticsPage() {
+  useDocumentTitle("Analytics — SubSplit");
   const {
     data: dashboard,
     isLoading: isDashboardLoading,

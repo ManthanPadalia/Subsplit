@@ -23,6 +23,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatRupees } from "@/lib/utils";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import type { AdminDashboardMetrics, AdminPlan } from "@/types";
 
 function getMetricCards(metrics: AdminDashboardMetrics) {
@@ -66,6 +67,7 @@ export function AdminPage() {
   const queryClient = useQueryClient();
   const [isAddPlanOpen, setIsAddPlanOpen] = useState(false);
   const [updatingPlanId, setUpdatingPlanId] = useState<string | null>(null);
+  useDocumentTitle("Admin Dashboard — SubSplit");
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["adminDashboard"],
     queryFn: getAdminDashboard,

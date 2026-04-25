@@ -1,9 +1,14 @@
+import { Clock3Icon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 import { useLeaveWaitlist, useMyWaitlist } from "@/hooks/useWaitlist";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/utils";
 
 export function WaitlistTab() {
+  const navigate = useNavigate();
   const { data, isLoading } = useMyWaitlist();
   const leaveWaitlist = useLeaveWaitlist();
 
@@ -18,9 +23,16 @@ export function WaitlistTab() {
 
   if (!data?.waitlist_entries.length) {
     return (
-      <div className="bg-card border border-border rounded-lg p-5 text-sm text-muted-foreground">
-        You are not waiting for any plans.
-      </div>
+      <EmptyState
+        icon={Clock3Icon}
+        title="No waitlist entries"
+        description="Join a waitlist from any full plan and we’ll keep your position updated here."
+        action={{
+          label: "Browse plans",
+          variant: "outline",
+          onClick: () => navigate("/plans"),
+        }}
+      />
     );
   }
 

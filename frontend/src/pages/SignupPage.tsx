@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { cn } from "@/lib/utils";
 
 const signupSchema = z
@@ -52,6 +53,7 @@ export function SignupPage() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const { isAuthenticated, setAuth, registerMutation } = useAuth();
+  useDocumentTitle("Sign Up — SubSplit");
   const {
     register,
     handleSubmit,

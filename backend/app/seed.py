@@ -100,7 +100,8 @@ def seed_database() -> None:
                     counts["score_events"] += 1
                     remaining = delta_needed - SCORE_DELTAS[ScoreEventType.SLOT_REVOKED]
                     late_delta = abs(SCORE_DELTAS[ScoreEventType.LATE_PAYMENT])
-                    for _ in range(abs(remaining) // late_delta):
+                    late_payments_needed = (abs(remaining) + late_delta - 1) // late_delta
+                    for _ in range(late_payments_needed):
                         db.add(
                             ScoreEvent(
                                 user_id=user.id,
@@ -112,7 +113,8 @@ def seed_database() -> None:
                         counts["score_events"] += 1
                 else:
                     late_delta = abs(SCORE_DELTAS[ScoreEventType.LATE_PAYMENT])
-                    for _ in range(abs(delta_needed) // late_delta):
+                    late_payments_needed = (abs(delta_needed) + late_delta - 1) // late_delta
+                    for _ in range(late_payments_needed):
                         db.add(
                             ScoreEvent(
                                 user_id=user.id,

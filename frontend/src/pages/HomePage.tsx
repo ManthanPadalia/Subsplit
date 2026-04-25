@@ -15,6 +15,7 @@ import { AppShell } from "@/components/layout/AppShell";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { Button } from "@/components/ui/button";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { usePlans } from "@/hooks/usePlans";
 
 const steps = [
@@ -66,6 +67,7 @@ const trustCards = [
 export function HomePage() {
   const navigate = useNavigate();
   const { data, isLoading, isError, refetch } = usePlans();
+  useDocumentTitle("SubSplit — Pay only for the slot you use");
 
   const featuredPlans = data?.plans.slice(0, 3) ?? [];
 

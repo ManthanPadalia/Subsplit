@@ -42,6 +42,7 @@ import {
 } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import { cn, formatDate, formatRupees } from "@/lib/utils";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import type { AdminPlanDetail, AdminPlanSlot, UpdatePlanInput } from "@/types";
 
 const planSettingsSchema = z.object({
@@ -206,6 +207,9 @@ export function AdminPlanDetailPage() {
     enabled: Boolean(id),
   });
   const headerIsActive = activeValue ?? plan?.is_active ?? true;
+  useDocumentTitle(
+    plan ? `${plan.name} — SubSplit` : "Plan Settings — SubSplit",
+  );
 
   useEffect(() => {
     if (!plan) {
